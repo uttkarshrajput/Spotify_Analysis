@@ -1,5 +1,7 @@
 # Spotify Dataset Analysis using SQL 
 
+![Spotify Logo](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_logo.jpg)
+
 ##  Project Overview
 This project focuses on analyzing a Spotify music dataset using SQL to understand track performance, artist trends, and engagement metrics. The goal of this project was to strengthen my SQL skills by working with a real-world dataset and applying concepts such as data exploration, aggregation, window functions, and query optimization.
 
