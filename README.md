@@ -10,102 +10,110 @@ The project covers the complete workflow — from understanding the dataset stru
 ---
 
 ##  Dataset Information
-Source: Kaggle – Spotify Dataset  
+- Source: Kaggle – Spotify Dataset  
 
-Data Type: Structured CSV data  
+- Data Type: Structured CSV data  
 
-Key Attributes:  
+- Key Attributes:  
 
-Artist, Track, Album, Album Type  
+- Artist, Track, Album, Album Type  
 
-Audio features (danceability, energy, tempo, loudness, etc.)  
+- Audio features (danceability, energy, tempo, loudness, etc.)  
 
-Engagement metrics (views, likes, comments, streams)  
+- Engagement metrics (views, likes, comments, streams)  
 
-Flags such as licensed and official_video  
+- Flags such as licensed and official_video  
 
 ---
 
 ## Tools & Technologies Used
-Database: PostgreSQL  
+- Database: PostgreSQL  
 
-Query Language: SQL  
+- Query Language: SQL  
 
-SQL Concepts Applied:  
+- SQL Concepts Applied:  
 
-Filtering & Aggregations  
+- Filtering & Aggregations  
 
-GROUP BY & HAVING  
+- GROUP BY & HAVING  
 
-Subqueries & CTEs  
+- Subqueries & CTEs  
 
-Window Functions  
+- Window Functions  
 
-Indexing & Query Optimization  
+- Indexing & Query Optimization  
 
-Tool: pgAdmin 4  
+- Tool: pgAdmin 4  
 
 ---
 
 ##  Project Approach
-Explored and understood the dataset structure and columns  
+- Explored and understood the dataset structure and columns  
 
-Created database tables and imported the dataset  
+- Created database tables and imported the dataset  
 
-Wrote SQL queries categorized into:  
+- Wrote SQL queries categorized into:  
 
-Easy (basic filtering and counts)  
+- Easy (basic filtering and counts)  
 
-Medium (aggregations and grouping)  
+- Medium (aggregations and grouping)  
 
-Advanced (CTEs, window functions, optimization)  
+- Advanced (CTEs, window functions, optimization)  
 
-Analyzed query performance using EXPLAIN ANALYZE  
+- Analyzed query performance using EXPLAIN ANALYZE  
 
-Improved performance by applying indexing techniques  
+- Improved performance by applying indexing techniques  
 
 ---
 
 ##  Key Business Questions Answered
-Which tracks have more than 1 billion streams?  
+- Which tracks have more than 1 billion streams?  
 
-What are the top 5 tracks with the highest energy levels?  
+- What are the top 5 tracks with the highest energy levels?  
 
-How does engagement differ for official vs non-official videos?  
+- How does engagement differ for official vs non-official videos?  
 
-Which artists and albums generate the highest views?  
+- Which artists and albums generate the highest views?  
 
-How do audio features like energy and liveness vary across albums?  
+- How do audio features like energy and liveness vary across albums?  
 
 ---
 
 ##  Query Optimization
-To understand performance tuning, I analyzed query execution plans using EXPLAIN ANALYZE.
+- To understand performance tuning, I analyzed query execution plans using EXPLAIN ANALYZE.
 
-Measured execution and planning time for queries  
+- Measured execution and planning time for queries  
 
-Created indexes on frequently queried columns (e.g., artist)  
+- Created indexes on frequently queried columns (e.g., artist)  
 
-Compared query performance before and after indexing  
+- Compared query performance before and after indexing  
 
-Observed significant reduction in execution time after optimization  
+- Observed significant reduction in execution time after optimization  
 
-This helped me understand how indexing impacts query performance on large datasets.
+- This helped me understand how indexing impacts query performance on large datasets.
 
 ---
 
 ## Key Learnings
 
-Practical application of SQL for data analysis
+- Practical application of SQL for data analysis
 
-Writing efficient and optimized queries
+- Writing efficient and optimized queries
 
-Using window functions for advanced analytics
+- Using window functions for advanced analytics
 
-Understanding query execution plans
+- Understanding query execution plans
 
-Working with real-world datasets and business-oriented questions
+- Working with real-world datasets and business-oriented questions
 
+---
+
+##  Key Insights
+
+- Tracks with official videos generally have higher engagement
+- High-energy tracks tend to receive more views
+- Indexing significantly reduced query execution time
+  
 ---
 
 ## Conclusion
