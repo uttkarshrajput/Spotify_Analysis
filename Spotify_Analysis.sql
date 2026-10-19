@@ -1,4 +1,5 @@
--- Advanced Sql Project -- Spotify Datasets
+-- Spotify and YouTube track analysis (PostgreSQL)
+-- Author: Uttkarsh Singh
 
 -- create table
 
@@ -44,7 +45,7 @@ SELECT DISTINCT album_type FROM spotify;
 SELECT MAX(duration_min) FROM spotify;
 
 SELECT MIN(duration_min) FROM spotify;
--- ( WE FOUND SONGS WITH 0 DURATIONS WHICH SHOWS INCONSISTENCY, SO WE ARE GOING TO REMOVE IT)
+-- Some tracks have a duration of 0 minutes, which is not possible, so they are removed.
 
 SELECT * FROM spotify
 WHERE duration_min = 0;
@@ -55,7 +56,7 @@ WHERE duration_min = 0;
 
 -- Data Analysis
 
--- Q.1. Retrieve the names of all tracks that have been have more than 1 billion streams.
+-- Q.1. Retrieve the names of all tracks that have more than 1 billion streams.
 
 SELECT track 
 FROM spotify
@@ -66,12 +67,12 @@ WHERE stream > 1000000000;
 SELECT DISTINCT album, artist FROM spotify
 ORDER BY 1;
 
--- Q.3. Get the total number of comments for tracks where liscenced = True.
+-- Q.3. Get the total number of comments for tracks where licensed = TRUE.
 
 SELECT 
-SUM(comments) AS total_commenmts
+SUM(comments) AS total_comments
 FROM spotify
-WHERE licensed = 'true';
+WHERE licensed = TRUE;
 
 -- Q.4. Find all the tracks that belong to the album type single.
 
@@ -98,32 +99,32 @@ ORDER BY 2 DESC;
 
 -- Q.7. Find the top 5 tracks with the highest energy values.
 
-SELECT track, MAX(energy)
+SELECT track, MAX(energy) AS max_energy
 FROM spotify
+GROUP BY 1
 ORDER BY 2 DESC
-LIMIT 5 ;
+LIMIT 5;
 
--- Q.8. List all the tracks alongs with their total views and likes where official_video = True.
+-- Q.8. List all the tracks along with their total views and likes where official_video = True.
 
 SELECT
     track,
 	SUM(views) AS total_views,
 	SUM(likes) AS total_likes
 FROM spotify
-WHERE official_video = 'true'
+WHERE official_video = TRUE
 GROUP BY 1;
 
 -- Q.9. For each album, calculate the total views of all associated tracks.
 
 SELECT 
     album,
-	track,
 	SUM(views) AS total_views
 FROM spotify
-GROUP BY 1, 2
-ORDER BY 3 DESC;
+GROUP BY 1
+ORDER BY 2 DESC;
 
---Q.10. Retrieve the track names that have been streamed on spotify more thyan Youtube.
+-- Q.10. Retrieve the track names that have been streamed on Spotify more than on YouTube.
 
 SELECT * FROM
 (SELECT 
@@ -137,7 +138,7 @@ WHERE streamed_on_Spotify > streamed_on_Youtube
 AND
 streamed_on_Youtube <> 0;
 
--- Q.11. -- Find the top 3 most-viewed tracks for each artist using window functions.
+-- Q.11. Find the top 3 most-viewed tracks for each artist using window functions.
 
 WITH ranking_artist
 AS
@@ -156,7 +157,7 @@ ORDER BY 1, 3 DESC
 SELECT * FROM ranking_artist
 WHERE rank <= 3;
 
--- Q.12. Write a query to find tracks where the livesness score is above the average.
+-- Q.12. Write a query to find tracks where the liveness score is above the average.
 
 SELECT track FROM spotify
 WHERE liveness > (SELECT AVG(liveness) FROM spotify);
@@ -174,14 +175,15 @@ GROUP BY 1
 )
 SELECT 
 	album,
-	highest_energy-lowest_energy
+	highest_energy - lowest_energy AS energy_range
 FROM CTE
 ORDER BY 2 DESC;
 
 
 -- Query Optimization
 
-EXPLAIN ANALYZE -- et - 7.97 ms and pt - 0.112 ms
+-- Before indexing: execution time 7.97 ms, planning time 0.112 ms (sequential scan)
+EXPLAIN ANALYZE
 SELECT
     artist,
     track,
@@ -190,6 +192,19 @@ FROM spotify
 WHERE artist = 'Gorillaz'
   AND most_played_on = 'Youtube'
 ORDER BY stream DESC
-LIMIT 25
+LIMIT 25;
 
-CREATE INDEX artist_index ON spotify (artist); -- After Indexing, et - 0.153 ms and pt - 0.152 ms
+CREATE INDEX artist_index ON spotify (artist);
+
+-- After indexing: execution time 0.153 ms, planning time 0.152 ms (index scan on artist_index)
+-- About 52 times faster than before.
+EXPLAIN ANALYZE
+SELECT
+    artist,
+    track,
+    views
+FROM spotify
+WHERE artist = 'Gorillaz'
+  AND most_played_on = 'Youtube'
+ORDER BY stream DESC
+LIMIT 25;
